@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GravitySnake</string>
+    <string name="difficulty_setting">Choose Difficulty</string>
 </resources>
