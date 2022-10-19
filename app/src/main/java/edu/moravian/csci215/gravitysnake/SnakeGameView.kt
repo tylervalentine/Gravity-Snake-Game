@@ -96,7 +96,7 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
      */
     fun setDifficulty(difficulty: Int) {
         this.difficulty = difficulty // need to save this for when we need to save the high score
-        // TODO: need to set lots of things in the snake game to change the game's difficulty (do it without ifs for clean code)
+        changeGameProperties(difficulty)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -104,6 +104,13 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
         postInvalidateOnAnimation() // automatically invalidate every frame so we get continuous playback
 
         // TODO: update the game and draw the contents of the view
+        snakeGame.update()
+        canvas.drawCircle(Snake.BODY_PIECE_SIZE_DP, Snake.BODY_PIECE_SIZE_DP, Snake.BODY_PIECE_SIZE_DP / 2, bodyPaint)
+        canvas.drawCircle(SnakeGame.FOOD_SIZE_DP, SnakeGame.FOOD_SIZE_DP, SnakeGame.FOOD_SIZE_DP / 2, foodPaint)
+        canvas.drawCircle(SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP / 2, wallPaint)
+        canvas.drawCircle(SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP / 2, wallPaint)
+        canvas.drawText(snakeGame.score.toString(), 0f,0f, scorePaint)
+
         // Make sure that drawing things utilize the SnakeGame.FOOD_SIZE_DP, SnakeGame.WALL_SIZE_DP,
         // and Snake.BODY_PIECE_SIZE_DP as the sizes of things when you draw them. You also must
         // make sure to utilize dpToPx() to convert the dp sizes to px sizes.
@@ -119,4 +126,37 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     // TODO: handle touch events
 
     // TODO: add more methods to reduce redundancy of code
+
+    /**
+     * Changes game properties based on difficulty provided.
+     * @param difficulty number representing current difficulty of game.
+     */
+    private fun changeGameProperties(difficulty: Int) {
+        when (difficulty) {
+            1 -> {
+                snakeGame.startingLength = 30
+                snakeGame.lengthIncreasePerFood = 11
+            }
+
+            2 -> {
+                snakeGame.startingLength = 35
+                snakeGame.lengthIncreasePerFood = 14
+                snakeGame.speedIncreasePerFood = 0.25f
+            }
+
+            3 -> {
+                snakeGame.startingLength = 40
+                snakeGame.lengthIncreasePerFood = 18
+                snakeGame.speedIncreasePerFood = 0.5f
+                snakeGame.wallPlacementProbability = 0.010f
+            }
+
+            4 -> {
+                snakeGame.startingLength = 45
+                snakeGame.lengthIncreasePerFood = 22
+                snakeGame.speedIncreasePerFood = 1.0f
+                snakeGame.wallPlacementProbability = 0.020f
+            }
+        }
+    }
 }
