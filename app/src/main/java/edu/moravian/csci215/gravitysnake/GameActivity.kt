@@ -3,6 +3,7 @@ package edu.moravian.csci215.gravitysnake
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,11 @@ import edu.moravian.csci215.gravitysnake.databinding.ActivityGameBinding
  * and the fullscreen handling is done as well. You only need to deal with
  * setting the difficulty and the sensors.
  */
+
+/**
+ * Slider code from https://www.geeksforgeeks.org/how-to-customise-mdc-sliders-in-android
+ */
+
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     /** The sensor manager service that gives access to sensors and listening to their events */
@@ -36,6 +42,16 @@ class GameActivity : AppCompatActivity() {
     /** The snakeGameView for this app */
     private lateinit var difficultySlider: Slider
 
+    /** enum class to convert the value of the difficultySlider to a difficulty setting */
+    enum class DifficultyFormat(val difficultyInt: Int) {
+        BEGINNER(0), EASY(25), MEDIUM(50), HARD(75), EXTREME(100);
+
+        companion object {
+            private val difficultyFormat = values().associateBy { it.difficultyInt }
+            fun findByValue(difficultyInt: Int) = difficultyFormat[difficultyInt]
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -47,15 +63,22 @@ class GameActivity : AppCompatActivity() {
         //register UI elements for the slider and the chosen difficulty
         difficultyResult = findViewById(R.id.difficultyResult)
         difficultySlider = findViewById(R.id.difficultySlider)
-
+        // defaults the difficulty to BEGINNER
+        difficultyResult.text = DifficultyFormat.findByValue(0).toString()
 
         // TODO: set the difficulty of the snake game view
-        //snakeGameView.setDifficulty()
+        // add Change listener for the difficultySlider to show on TextView and change the Difficulty
+        difficultySlider.addOnChangeListener {
+                _, value, _ -> difficultyResult.text = value.toDouble().toString()
+                // changes the difficulty of the game when the slider value is changed by th user
+                snakeGameView.setDifficulty(value.toInt())
+        }
 
         // TODO: setup the sensors (use the gravity sensor)
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager?.getDefaultSensor(Sensor.TYPE_GRAVITY)
         snakeGameView = findViewById(R.id.snakeGameView)
+
     }
 
 
