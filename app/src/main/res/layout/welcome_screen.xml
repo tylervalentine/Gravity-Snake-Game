@@ -7,6 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <TextView
+        android:id="@+id/gameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/game_title" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="229dp"
+        android:layout_height="106dp"
+        android:fontFamily="casual"
+        android:text="@string/start_game"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.slider.Slider
         android:id="@+id/difficultySlider"
         android:layout_width="match_parent"
@@ -18,21 +44,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintVertical_bias="0.40"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/difficultyResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="64dp"
+        android:fontFamily="casual"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultySlider"
+        app:layout_constraintTop_toTopOf="@+id/difficultySlider"
         tools:text="@string/difficulty_setting" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- Code from https://www.geeksforgeeks.org/how-to-customise-mdc-sliders-in-android/ -->
