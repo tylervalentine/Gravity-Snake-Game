@@ -142,6 +142,7 @@ class SnakeGame : ViewModel() {
         return true
     }
 
+
     /**
      * "Touch" the game at a particular point. If the snake is touched
      * anywhere, the game is over. If the food is touched, it moves. If a wall
