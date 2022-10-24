@@ -42,6 +42,7 @@ class GameActivity : AppCompatActivity() {
     /** The snakeGameView for this app */
     private lateinit var snakeGameView: SnakeGameView
 
+
     /** enum class to convert the value of the difficultySlider to a difficulty setting */
     enum class DifficultyFormat(val difficultyInt: Int) {
         BEGINNER(0), EASY(25), MEDIUM(50), HARD(75), EXTREME(100);
@@ -56,6 +57,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        snakeGameView.setDifficulty(intent.getIntExtra("difficulty", 0))
 
         // Force the game to be fullscreen
         hideSystemUI()

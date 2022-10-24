@@ -140,29 +140,36 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
      */
     private fun changeGameProperties(difficulty: Int) {
         when (difficulty) {
-            1 -> {
+            0 -> {
                 snakeGame.startingLength = 30
                 snakeGame.lengthIncreasePerFood = 11
             }
 
-            2 -> {
+            25 -> {
                 snakeGame.startingLength = 35
                 snakeGame.lengthIncreasePerFood = 14
                 snakeGame.speedIncreasePerFood = 0.25f
             }
 
-            3 -> {
+            50 -> {
                 snakeGame.startingLength = 40
                 snakeGame.lengthIncreasePerFood = 18
                 snakeGame.speedIncreasePerFood = 0.5f
                 snakeGame.wallPlacementProbability = 0.010f
             }
 
-            4 -> {
+            75 -> {
                 snakeGame.startingLength = 45
                 snakeGame.lengthIncreasePerFood = 22
                 snakeGame.speedIncreasePerFood = 1.0f
                 snakeGame.wallPlacementProbability = 0.020f
+            }
+
+            100 -> {
+                snakeGame.startingLength = 50
+                snakeGame.lengthIncreasePerFood = 24
+                snakeGame.speedIncreasePerFood = 1.2f
+                snakeGame.wallPlacementProbability = 0.025f
             }
         }
     }
