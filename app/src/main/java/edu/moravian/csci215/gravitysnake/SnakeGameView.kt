@@ -105,10 +105,17 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
 
         // TODO: update the game and draw the contents of the view
         snakeGame.update()
-        canvas.drawCircle(Snake.BODY_PIECE_SIZE_DP, Snake.BODY_PIECE_SIZE_DP, Snake.BODY_PIECE_SIZE_DP / 2, bodyPaint)
-        canvas.drawCircle(SnakeGame.FOOD_SIZE_DP, SnakeGame.FOOD_SIZE_DP, SnakeGame.FOOD_SIZE_DP / 2, foodPaint)
-        canvas.drawCircle(SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP / 2, wallPaint)
-        canvas.drawCircle(SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP, SnakeGame.WALL_SIZE_DP / 2, wallPaint)
+        for (location in snakeGame.bodyLocations)
+        {
+            canvas.drawCircle(location.x, location.y, dpToPx(Snake.BODY_PIECE_SIZE_DP), bodyPaint)
+        }
+
+        canvas.drawCircle(snakeGame.foodLocation.x, snakeGame.foodLocation.y, dpToPx(SnakeGame.FOOD_SIZE_DP), foodPaint)
+        for (location in snakeGame.wallLocations)
+        {
+            canvas.drawCircle(location.x, location.y, dpToPx(SnakeGame.WALL_SIZE_DP), wallPaint)
+        }
+
         canvas.drawText(snakeGame.score.toString(), 0f,0f, scorePaint)
 
         // Make sure that drawing things utilize the SnakeGame.FOOD_SIZE_DP, SnakeGame.WALL_SIZE_DP,

@@ -28,10 +28,12 @@
         android:fontFamily="casual"
         android:text="@string/start_game"
         android:textSize="48sp"
+        android:onClick="changeScreenView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="OnClick" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/difficultySlider"
