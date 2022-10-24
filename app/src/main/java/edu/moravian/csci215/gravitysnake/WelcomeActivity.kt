@@ -11,7 +11,9 @@ class WelcomeActivity: AppCompatActivity() {
 
     private lateinit var binding: WelcomeScreenBinding
 
-    /** the TextView for the chosen difficulty */
+    /** the TextView for the chosen difficulty and game title*/
+
+    private var gameTitle: TextView? = null
     private var difficultyResult: TextView? = null
 
     /** The snakeGameView for this app */
@@ -24,9 +26,11 @@ class WelcomeActivity: AppCompatActivity() {
         binding = WelcomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //register UI elements for the slider and the chosen difficulty
+        //register UI elements for the slider, chosen difficulty, and the game title
+        gameTitle = findViewById(R.id.gameTitle)
         difficultyResult = findViewById(R.id.difficultyResult)
         difficultySlider = findViewById(R.id.difficultySlider)
+        gameTitle?.text = "Gravity Snake"
 
         // defaults the difficulty to BEGINNER
         difficultyResult?.text = GameActivity.DifficultyFormat.findByValue(0).toString()
