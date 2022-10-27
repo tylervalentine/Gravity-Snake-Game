@@ -16,6 +16,7 @@ class WelcomeActivity: AppCompatActivity() {
     private var gameTitle: TextView? = null
     private  var difficultyResult: TextView? = null
 
+    private var difficulyNumber: Int = 0
     /** The snakeGameView for this app */
     private var difficultySlider: Slider? = null
 
@@ -36,7 +37,9 @@ class WelcomeActivity: AppCompatActivity() {
         // TODO: set the difficulty of the snake game view
         // add Change listener for the difficultySlider to show on TextView and change the Difficulty
         difficultySlider?.addOnChangeListener { _, value, _ ->
-            difficultyResult?.text = value.toInt().toString()
+
+            difficulyNumber = value.toInt()
+            difficultyResult?.text = GameActivity.DifficultyFormat.findByValue(value.toInt()).toString()
         }
 
     }
@@ -44,7 +47,7 @@ class WelcomeActivity: AppCompatActivity() {
     /** Allows the screen to change to the game activity when the user clicks the start button */
     fun changeScreenView(view: View?) {
         val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra("difficulty", difficultyResult!!.text.toString().toInt())
+        intent.putExtra("difficulty", difficulyNumber)
         startActivity(intent)
     }
 }

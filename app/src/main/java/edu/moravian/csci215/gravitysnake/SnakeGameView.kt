@@ -1,16 +1,16 @@
 package edu.moravian.csci215.gravitysnake
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import kotlin.math.atan2
 
 
 /**
@@ -29,7 +29,6 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     private val displayMetrics = context.resources.displayMetrics
 
     /** The paints and drawables used for the different parts of the game  */
-    // TODO: adjust these fields as appropriate for your style (including their values, which ones there are, and if they are paints or drawables)
     private val bodyPaint = Paint().apply { color = 0xAA008800.toInt() }
     private val foodPaint = Paint().apply { color = Color.RED }
     private val wallPaint = Paint().apply { color = 0xFF964B00.toInt() }
@@ -110,6 +109,8 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
             canvas.drawCircle(location.x, location.y, dpToPx(Snake.BODY_PIECE_SIZE_DP), bodyPaint)
         }
 
+        canvas.drawCircle(snakeGame.headLocation.x, snakeGame.headLocation.y, dpToPx(Snake.BODY_PIECE_SIZE_DP), bodyPaint)
+
         canvas.drawCircle(snakeGame.foodLocation.x, snakeGame.foodLocation.y, dpToPx(SnakeGame.FOOD_SIZE_DP), foodPaint)
         for (location in snakeGame.wallLocations)
         {
@@ -124,14 +125,13 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        // TODO
+        snakeGame.movementDirection = atan2(event.values[1],event.values[0])
     }
 
     /** Does nothing but must be provided.  */
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
-    // TODO: handle touch events
-
+    override fun onTouchEvent(event: MotionEvent?): Boolean = snakeGame.touched(PointF(event!!.x, event.y))
     // TODO: add more methods to reduce redundancy of code
 
     /**
@@ -139,33 +139,33 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
      * @param difficulty number representing current difficulty of game.
      */
     private fun changeGameProperties(difficulty: Int) {
-        when (difficulty) {
-            0 -> {
+        when (GameActivity.DifficultyFormat.findByValue(difficulty)) {
+            GameActivity.DifficultyFormat.BEGINNER -> {
                 snakeGame.startingLength = 30
                 snakeGame.lengthIncreasePerFood = 11
             }
 
-            25 -> {
+            GameActivity.DifficultyFormat.EASY -> {
                 snakeGame.startingLength = 35
                 snakeGame.lengthIncreasePerFood = 14
                 snakeGame.speedIncreasePerFood = 0.25f
             }
 
-            50 -> {
+            GameActivity.DifficultyFormat.MEDIUM -> {
                 snakeGame.startingLength = 40
                 snakeGame.lengthIncreasePerFood = 18
                 snakeGame.speedIncreasePerFood = 0.5f
                 snakeGame.wallPlacementProbability = 0.010f
             }
 
-            75 -> {
+            GameActivity.DifficultyFormat.HARD-> {
                 snakeGame.startingLength = 45
                 snakeGame.lengthIncreasePerFood = 22
                 snakeGame.speedIncreasePerFood = 1.0f
                 snakeGame.wallPlacementProbability = 0.020f
             }
 
-            100 -> {
+            else -> {
                 snakeGame.startingLength = 50
                 snakeGame.lengthIncreasePerFood = 24
                 snakeGame.speedIncreasePerFood = 1.2f
