@@ -1,17 +1,14 @@
 package edu.moravian.csci215.gravitysnake
 
-import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.view.View
+import android.view.MotionEvent
 import android.view.WindowManager
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.google.android.material.slider.Slider
 import edu.moravian.csci215.gravitysnake.databinding.ActivityGameBinding
 
 
@@ -42,7 +39,6 @@ class GameActivity : AppCompatActivity() {
     /** The snakeGameView for this app */
     private var snakeGameView: SnakeGameView? = null
 
-
     /** enum class to convert the value of the difficultySlider to a difficulty setting */
     enum class DifficultyFormat(val difficultyInt: Int) {
         BEGINNER(0), EASY(25), MEDIUM(50), HARD(75), EXTREME(100);
@@ -62,21 +58,19 @@ class GameActivity : AppCompatActivity() {
         // Force the game to be fullscreen
         hideSystemUI()
 
-        // TODO: setup the sensors (use the gravity sensor)
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager?.getDefaultSensor(Sensor.TYPE_GRAVITY)
         snakeGameView = findViewById(R.id.snakeGameView)
 
     }
 
-    // TODO: properly setup sensor event listeners (the listener is the snake game view)
     /** When the activity resumes, we start listening to the sensor. */
     override fun onResume() {
         super.onResume()
         sensorManager?.registerListener(
             snakeGameView,
             gravitySensor,
-            SensorManager.SENSOR_DELAY_NORMAL
+            SensorManager.SENSOR_DELAY_UI
         )
     }
 

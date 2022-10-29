@@ -1,5 +1,6 @@
 package edu.moravian.csci215.gravitysnake
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.hardware.Sensor
@@ -102,7 +103,6 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
         super.onDraw(canvas)
         postInvalidateOnAnimation() // automatically invalidate every frame so we get continuous playback
 
-        // TODO: update the game and draw the contents of the view
         snakeGame.update()
         for (location in snakeGame.bodyLocations)
         {
@@ -112,12 +112,15 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
         canvas.drawCircle(snakeGame.headLocation.x, snakeGame.headLocation.y, dpToPx(Snake.BODY_PIECE_SIZE_DP), bodyPaint)
 
         canvas.drawCircle(snakeGame.foodLocation.x, snakeGame.foodLocation.y, dpToPx(SnakeGame.FOOD_SIZE_DP), foodPaint)
-        for (location in snakeGame.wallLocations)
-        {
+        for (location in snakeGame.wallLocations) {
             canvas.drawCircle(location.x, location.y, dpToPx(SnakeGame.WALL_SIZE_DP), wallPaint)
         }
 
         canvas.drawText(snakeGame.score.toString(), 0f,0f, scorePaint)
+
+        if(snakeGame.isGameOver) {
+            canvas.drawLine(0.0f, 10.0f, 0.0f, 200.0f, gameOverBarPaint)
+        }
 
         // Make sure that drawing things utilize the SnakeGame.FOOD_SIZE_DP, SnakeGame.WALL_SIZE_DP,
         // and Snake.BODY_PIECE_SIZE_DP as the sizes of things when you draw them. You also must
@@ -125,14 +128,19 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        snakeGame.movementDirection = atan2(event.values[1],event.values[0])
+        snakeGame.movementDirection = (Math.PI - atan2(event.values[1],event.values[0])).toFloat()
     }
 
     /** Does nothing but must be provided.  */
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean = snakeGame.touched(PointF(event!!.x, event.y))
-    // TODO: add more methods to reduce redundancy of code
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (!snakeGame.touched(PointF(event!!.x, event.y))) {
+            val activity = context as Activity
+            activity.finish()
+        }
+        return true
+    }
 
     /**
      * Changes game properties based on difficulty provided.

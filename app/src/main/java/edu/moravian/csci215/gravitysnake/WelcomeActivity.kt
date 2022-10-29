@@ -29,15 +29,13 @@ class WelcomeActivity: AppCompatActivity() {
         gameTitle = findViewById(R.id.gameTitle)
         difficultyResult = findViewById(R.id.difficultyResult)
         difficultySlider = findViewById(R.id.difficultySlider)
-        gameTitle?.text = "Gravity Snake"
+        gameTitle?.text = getString(R.string.game_title)
 
         // defaults the difficulty to BEGINNER
         difficultyResult?.text = GameActivity.DifficultyFormat.findByValue(0).toString()
 
-        // TODO: set the difficulty of the snake game view
-        // add Change listener for the difficultySlider to show on TextView and change the Difficulty
+        // Changes game difficulty based on value of slider
         difficultySlider?.addOnChangeListener { _, value, _ ->
-
             difficulyNumber = value.toInt()
             difficultyResult?.text = GameActivity.DifficultyFormat.findByValue(value.toInt()).toString()
         }
