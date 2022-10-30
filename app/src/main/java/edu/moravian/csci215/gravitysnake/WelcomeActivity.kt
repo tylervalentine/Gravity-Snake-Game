@@ -18,7 +18,7 @@ class WelcomeActivity: AppCompatActivity() {
     private var difficultySlider: Slider? = null
     private var highScoreText: TextView? = null
 
-
+    private var gameActivity = GameActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

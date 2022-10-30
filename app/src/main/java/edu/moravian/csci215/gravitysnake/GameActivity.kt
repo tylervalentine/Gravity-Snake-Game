@@ -2,14 +2,18 @@ package edu.moravian.csci215.gravitysnake
 
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowManager
+import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import edu.moravian.csci215.gravitysnake.databinding.ActivityGameBinding
+import java.io.IOException
 
 
 /**
@@ -49,6 +53,11 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    /** Media player instance */
+    private var mediaPlayer: MediaPlayer? = null
+    /** All of the known audio files */
+    private val audio = R.raw.desert
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -62,6 +71,66 @@ class GameActivity : AppCompatActivity() {
         gravitySensor = sensorManager?.getDefaultSensor(Sensor.TYPE_GRAVITY)
         snakeGameView = findViewById(R.id.snakeGameView)
     }
+
+    override fun onStart()
+    {
+        super.onStart()
+        mediaPlayer = MediaPlayer.create(applicationContext, R.raw.desert)
+        setMusic()
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    /**
+     * Toggles play back of the media player. If it is currently playing, it is
+     * stopped. If it is not currently playing, it is started.
+     */
+    private fun togglePlayback() {
+        mediaPlayer?.apply {
+            if (isPlaying) {
+                // if currently playing, reset to beginning and pause
+                seekTo(0)
+                pause()
+            } else {
+                // if not currently playing, start playing
+                start()
+            }
+        }
+    }
+
+    /**
+     * Sets the audio being played from a resource ID.
+     * @param resourceId the resource audio for the audio, R.raw.desert
+     */
+    private fun setAudioResource(@RawRes resourceId: Int) {
+        val afd = resources.openRawResourceFd(resourceId)
+        try {
+            mediaPlayer?.apply {
+                reset()
+                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                prepare()
+                afd.close()
+            }
+        } catch (ex: IOException) {
+            Log.e("MainActivity", "set audio resource failed", ex)
+        }
+    }
+
+    /**
+     * Sets the music to the audio file and calls togglePlayBack()
+     */
+    fun setMusic()
+    {
+        setAudioResource(audio)
+        togglePlayback()
+
+    }
+
 
     /** When the activity resumes, we start listening to the sensor. */
     override fun onResume() {
