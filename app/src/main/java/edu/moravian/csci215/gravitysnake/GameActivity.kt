@@ -61,7 +61,6 @@ class GameActivity : AppCompatActivity() {
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager?.getDefaultSensor(Sensor.TYPE_GRAVITY)
         snakeGameView = findViewById(R.id.snakeGameView)
-
     }
 
     /** When the activity resumes, we start listening to the sensor. */

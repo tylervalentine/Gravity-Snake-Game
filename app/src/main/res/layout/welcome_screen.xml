@@ -26,9 +26,9 @@
         android:layout_width="229dp"
         android:layout_height="106dp"
         android:fontFamily="casual"
+        android:onClick="changeScreenView"
         android:text="@string/start_game"
         android:textSize="48sp"
-        android:onClick="changeScreenView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +63,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/difficultySlider"
         tools:text="@string/difficulty_setting" />
+
+    <TextView
+        android:id="@+id/high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:text="@string/high_score_text"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/difficultySlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Code from https://www.geeksforgeeks.org/how-to-customise-mdc-sliders-in-android/ -->
