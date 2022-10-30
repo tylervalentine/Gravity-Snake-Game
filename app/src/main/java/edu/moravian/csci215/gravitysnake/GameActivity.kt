@@ -93,11 +93,9 @@ class GameActivity : AppCompatActivity() {
     private fun togglePlayback() {
         mediaPlayer?.apply {
             if (isPlaying) {
-                // if currently playing, reset to beginning and pause
                 seekTo(0)
                 pause()
             } else {
-                // if not currently playing, start playing
                 start()
             }
         }
@@ -128,7 +126,6 @@ class GameActivity : AppCompatActivity() {
     {
         setAudioResource(audio)
         togglePlayback()
-
     }
 
 
