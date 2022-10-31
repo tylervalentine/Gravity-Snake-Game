@@ -99,6 +99,7 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
         changeGameProperties(difficulty)
     }
 
+    /** Updates the game, draws all parts of the game, and draws the game over bar when the game is finished. */
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         postInvalidateOnAnimation() // automatically invalidate every frame so we get continuous playback
@@ -128,6 +129,7 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
         // make sure to utilize dpToPx() to convert the dp sizes to px sizes.
     }
 
+    /** Changes direction of the snake when the screen is rotated. */
     override fun onSensorChanged(event: SensorEvent) {
         snakeGame.movementDirection = (Math.PI - atan2(event.values[1],event.values[0])).toFloat()
     }
@@ -135,6 +137,11 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     /** Does nothing but must be provided.  */
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
+
+    /**
+     * Checks for touch events during the game. If game is over, the game will reset back to the welcome screen
+     * and update the high scores based on what happened in the game.
+     * */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (!snakeGame.touched(PointF(event!!.x, event.y))) {
             val activity = context as Activity

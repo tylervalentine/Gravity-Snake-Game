@@ -22,6 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.258"
         tools:text="@string/game_title" />
 
     <Button
@@ -37,6 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
         tools:ignore="OnClick" />
 
     <com.google.android.material.slider.Slider
@@ -52,12 +54,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.40"
+        app:layout_constraintVertical_bias="0.317"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/difficultyResult"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="64dp"
         android:fontFamily="casual"
@@ -67,8 +69,10 @@
         android:theme="@style/Theme.GravitySnake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.382"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/difficultySlider"
+        app:layout_constraintVertical_bias="0.253"
         tools:text="@string/difficulty_setting" />
 
     <TextView
@@ -84,16 +88,15 @@
         android:theme="@style/Theme.GravitySnake"
         app:layout_constraintBottom_toTopOf="@+id/difficultySlider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Switch
         android:id="@+id/music_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
         android:checked="true"
         android:fontFamily="casual"
         android:minHeight="48dp"
@@ -102,10 +105,10 @@
         android:theme="@style/Theme.GravitySnake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultySlider"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.696" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- Code from https://www.geeksforgeeks.org/how-to-customise-mdc-sliders-in-android/ -->

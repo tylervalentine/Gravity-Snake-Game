@@ -3,26 +3,19 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.TextView
-import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.slider.Slider
 import edu.moravian.csci215.gravitysnake.databinding.WelcomeScreenBinding
-import java.io.IOException
 
 class WelcomeActivity: AppCompatActivity() {
 
     private lateinit var binding: WelcomeScreenBinding
 
+    /** Difficulty number to use for the game*/
     private var difficultyNumber: Int = 0
 
     /** Media player instance */
     private var mediaPlayer: MediaPlayer? = null
-
-    /** Audio file to play */
-    private val audio = R.raw.desert
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,16 +42,19 @@ class WelcomeActivity: AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(applicationContext, R.raw.desert)
         mediaPlayer?.start()
 
+        // Checks state of switch and starts or pauses music.
         binding.musicSwitch.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
                 mediaPlayer?.start()
             }
-            else {
+            else
+            {
                 mediaPlayer?.pause()
             }
         }
     }
 
+    /** Destroys media player when activity is destroyed. */
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer = null

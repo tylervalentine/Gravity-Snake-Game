@@ -2,12 +2,8 @@ package edu.moravian.csci215.gravitysnake
 
 import android.hardware.Sensor
 import android.hardware.SensorManager
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import android.view.WindowManager
-import androidx.annotation.RawRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
