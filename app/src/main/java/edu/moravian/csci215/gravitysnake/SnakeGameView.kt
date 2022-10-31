@@ -137,7 +137,7 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (!snakeGame.touched(PointF(event!!.x, event.y))) {
             val activity = context as Activity
-            val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+            val sharedPref = activity.getSharedPreferences("highscore",Context.MODE_PRIVATE)
             with (sharedPref.edit()) {
                 putInt(GameActivity.DifficultyFormat.findByValue(difficulty).toString(), snakeGame.score)
                 apply()

@@ -5,4 +5,5 @@
     <string name="start_game">START</string>
     <string name="high_score_text">High Score: %1$d</string>
     <string name= "high_score">0</string>
+    <string name="music_switch_text">Music</string>
 </resources>
