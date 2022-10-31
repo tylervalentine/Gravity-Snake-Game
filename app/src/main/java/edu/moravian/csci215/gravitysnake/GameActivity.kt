@@ -57,7 +57,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        snakeGameView?.setDifficulty(intent.getIntExtra("difficulty", 0))
+        binding.root.setDifficulty(intent.getIntExtra("difficulty", 0))
 
         // Force the game to be fullscreen
         hideSystemUI()

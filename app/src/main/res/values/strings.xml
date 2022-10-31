@@ -1,9 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GravitySnake</string>
     <string name="difficulty_setting">Choose Difficulty</string>
     <string name="game_title">GRAVITY SNAKE</string>
     <string name="start_game">START</string>
     <string name="high_score_text">High Score: %1$d</string>
-    <string name= "high_score">0</string>
+    <string name="high_score">0</string>
     <string name="music_switch_text">Music</string>
+    <string name="game_over_text" tools:ignore="ExtraTranslation">Game Over</string>
 </resources>

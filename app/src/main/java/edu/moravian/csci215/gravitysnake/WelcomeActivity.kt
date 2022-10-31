@@ -45,6 +45,10 @@ class WelcomeActivity: AppCompatActivity() {
             setHighScoreText(difficultyNumber)
         }
 
+        // Setup music
+        mediaPlayer = MediaPlayer.create(applicationContext, R.raw.desert)
+        mediaPlayer?.start()
+
         binding.musicSwitch.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
                 mediaPlayer?.start()
@@ -55,49 +59,18 @@ class WelcomeActivity: AppCompatActivity() {
         }
     }
 
-    override fun onStart()
-    {
-        super.onStart()
-        mediaPlayer = MediaPlayer.create(applicationContext, R.raw.desert)
-        setAudioResource(audio)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer?.release()
         mediaPlayer = null
     }
-
     /**
      * Sets high score text based on provided difficulty number.
      * @param difficulty difficulty number
      */
     private fun setHighScoreText(difficulty: Int) {
-        val sharedPref = this.getSharedPreferences("highscore", Context.MODE_PRIVATE) ?: return
+        val sharedPref = getSharedPreferences("highscore", Context.MODE_PRIVATE) ?: return
         val highScore = sharedPref.getInt(GameActivity.DifficultyFormat.findByValue(difficulty).toString(), 0)
         binding.highScore.text = getString(R.string.high_score_text, highScore)
-    }
-
-    /**
-     * Sets the audio being played from a resource ID.
-     * @param resourceId the resource audio for the audio, R.raw.desert
-     */
-    private fun setAudioResource(@RawRes resourceId: Int) {
-        val afd = resources.openRawResourceFd(resourceId)
-        try {
-            mediaPlayer?.apply {
-                reset()
-                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                prepare()
-                afd.close()
-            }
-        } catch (ex: IOException) {
-            Log.e("MainActivity", "set audio resource failed", ex)
-        }
-    }
-
-    private fun setMusic() {
-        mediaPlayer?.start()
     }
 
     /** Allows the screen to change to the game activity when the user clicks the start button */
