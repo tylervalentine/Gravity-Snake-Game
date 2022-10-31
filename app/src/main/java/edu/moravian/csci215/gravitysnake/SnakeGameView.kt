@@ -116,10 +116,11 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
             canvas.drawCircle(location.x, location.y, dpToPx(SnakeGame.WALL_SIZE_DP), wallPaint)
         }
 
-        canvas.drawText(snakeGame.score.toString(), 0f,0f, scorePaint)
+        canvas.drawText(snakeGame.score.toString(), 375f,300f, scorePaint)
 
         if(snakeGame.isGameOver) {
-            canvas.drawLine(0.0f, 10.0f, 0.0f, 200.0f, gameOverBarPaint)
+            canvas.drawRect(10.0f, 600.0f, 700.0f, 800.0f, gameOverBarPaint)
+            canvas.drawText(resources.getString(R.string.game_over_text), 375.0f, 700.0f, scorePaint)
         }
 
         // Make sure that drawing things utilize the SnakeGame.FOOD_SIZE_DP, SnakeGame.WALL_SIZE_DP,
@@ -139,8 +140,13 @@ class SnakeGameView constructor(context: Context, attrs: AttributeSet? = null) :
             val activity = context as Activity
             val sharedPref = activity.getSharedPreferences("highscore",Context.MODE_PRIVATE)
             with (sharedPref.edit()) {
-                putInt(GameActivity.DifficultyFormat.findByValue(difficulty).toString(), snakeGame.score)
-                apply()
+                if(snakeGame.score > sharedPref.getInt(GameActivity.DifficultyFormat.findByValue(difficulty).toString(), 0)) {
+                    putInt(
+                        GameActivity.DifficultyFormat.findByValue(difficulty).toString(),
+                        snakeGame.score
+                    )
+                    apply()
+                }
             }
             activity.finish()
         }
